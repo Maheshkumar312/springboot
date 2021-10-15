@@ -31,6 +31,7 @@ private EmployeeRepository employeeRepository;
 		 emp.setFirstName(employee.getFirstName());
 		 emp.setLastName(employee.getLastName());
 		 emp.setEmail(employee.getEmail());
+		 emp.setProfile(employee.getProfile());
 	emp=this.employeeRepository.save(emp);
 	if(emp!=null)
 	{
@@ -50,7 +51,7 @@ private EmployeeRepository employeeRepository;
 		List<EmployeeDTO> list=new ArrayList<>();
 		List<Employee> employees=this.employeeRepository.findAll();
 		for(Employee emp:employees) {
-			list.add(new EmployeeDTO(emp.getId(), emp.getFirstName(),emp.getLastName(), emp.getEmail()));
+			list.add(new EmployeeDTO(emp.getId(), emp.getFirstName(),emp.getLastName(), emp.getEmail(),emp.getProfile()));
 		}
 		return list;
 	}
@@ -60,7 +61,7 @@ private EmployeeRepository employeeRepository;
 		 Optional<Employee> employee=this.employeeRepository.findById(employeeId);
 		 Employee emp=employee.get();
 
-		return Optional.of(new EmployeeDTO(emp.getId(),emp.getFirstName(),emp.getLastName(),emp.getEmail()));
+		return Optional.of(new EmployeeDTO(emp.getId(),emp.getFirstName(),emp.getLastName(),emp.getEmail(),emp.getProfile()));
 		
 	}
 	 @Override
@@ -73,6 +74,7 @@ private EmployeeRepository employeeRepository;
 			employee.setFirstName(employeeDto.getFirstName());
 			employee.setLastName(employeeDto.getLastName());
 			employee.setEmail(employeeDto.getEmail());
+			employee.setProfile(employeeDto.getProfile());
 			// save existing employee to DB
 			
 			employee = employeeRepository.save(employee);
@@ -83,6 +85,7 @@ private EmployeeRepository employeeRepository;
 				updateEmployeeResponse.setFirstName(employeeDto.getFirstName());
 				updateEmployeeResponse.setLastName(employeeDto.getLastName());
 				updateEmployeeResponse.setEmail(employeeDto.getEmail());
+				
 			}
 			
 			return updateEmployeeResponse;
@@ -99,8 +102,43 @@ private EmployeeRepository employeeRepository;
 		return  emp;
 	}
 	
+	
+	
+	//custom queries
+	
+	
+	@Override
+	public List<EmployeeDTO> getAllQuery() {
+		List<EmployeeDTO> list = new ArrayList<>();
+		List<Employee> employees = this.employeeRepository.getAll();
+		for (Employee emp : employees) {
+			list.add(new EmployeeDTO(emp.getId(), emp.getFirstName(), emp.getLastName(), emp.getEmail(),emp.getProfile()));
+		}
+		return list;
+	}
 
+	@Override
+	public EmployeeDTO UpadateUserQuery(String name, Long id) {
+		Integer test = this.employeeRepository.updateUserNameByID(name, id);
+		EmployeeDTO employeeDTO;
+		if (test == 1) {
+			Optional<Employee> employee = employeeRepository.findById(id);
+			Employee emp = employee.get();
+			employeeDTO = new EmployeeDTO(emp.getId(), emp.getFirstName(), emp.getLastName(), emp.getEmail(),emp.getProfile());
+			return employeeDTO;
+		} else {
+			new ResourceNotFoundException(" employee", "id", id);
+			employeeDTO = new EmployeeDTO();
+		}
+		return employeeDTO;
 
+	}
+
+	@Override
+	public List<String> nameAll() {
+		List<String> str = employeeRepository.getNameAll();
+		return str;
+	}
 
 
 }

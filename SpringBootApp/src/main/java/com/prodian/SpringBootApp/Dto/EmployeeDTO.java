@@ -2,6 +2,11 @@ package com.prodian.SpringBootApp.Dto;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
+import javax.persistence.OneToOne;
+
+import com.prodian.SpringBootApp.Entity.Profile;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,5 +22,7 @@ public class EmployeeDTO implements Serializable{
 	private String lastName;
 	private String email;
 	
-
+	 @OneToOne(targetEntity = Profile.class, cascade = CascadeType.ALL)
+		
+     private  Profile profile;
 }

@@ -69,4 +69,25 @@ public class EmployeeController {
 		return new ResponseEntity<String>("Employee deleted successfully!.", HttpStatus.OK);
 	}
 	
+	
+	//custom queries
+	@GetMapping("/names")
+	public List<EmployeeDTO> getAllQuery() {
+		return employeeService.getAllQuery();
+	}
+
+	@PutMapping("query/{id}")
+	public ResponseEntity<String> UpadateUserQuery(String name, Long id) {
+
+		// delete employee from DB
+		employeeService.UpadateUserQuery(name,id);
+
+		return new ResponseEntity<String>("Employee updated successfully!.", HttpStatus.OK);
+	}
+@GetMapping("/getAll")
+	public List<String> nameAll() {
+		return employeeService.nameAll();
+		
+	}
+	
 }

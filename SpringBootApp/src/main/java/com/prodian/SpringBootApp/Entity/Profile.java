@@ -25,6 +25,7 @@ import lombok.Setter;
 public class Profile {
 	@Id
 	@Column(name = "id")
+	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@Column(name = "designation")

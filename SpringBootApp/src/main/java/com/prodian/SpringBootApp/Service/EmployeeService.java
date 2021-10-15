@@ -15,4 +15,9 @@ public interface EmployeeService {
 	Optional<EmployeeDTO> getEmployeeById(long id);
 	 UpdateEmployeeResponse updateEmployee(EmployeeDTO employee, long id);
 	EmployeeDTO deleteEmployee(long id);
+	
+	//query
+	List<EmployeeDTO> getAllQuery();
+	EmployeeDTO UpadateUserQuery(String name, Long id);
+	List<String> nameAll();
 }
