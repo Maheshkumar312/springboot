@@ -11,8 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.prodian.StudentManagementSystem.Entity.Student;
 import com.prodian.StudentManagementSystem.Service.StudentService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 
 	@Controller
+ 	@Api("this is student management system")
 	public class StudentController {
 		
 		private StudentService studentService;
@@ -23,6 +27,7 @@ import com.prodian.StudentManagementSystem.Service.StudentService;
 		}
 		
 		// handler method to handle list students and return mode and view
+//		@ApiOperation("this is used to store student details")
 		@GetMapping("/students")
 		public String listStudents(Model model) {
 			model.addAttribute("students", studentService.getAllStudents());
@@ -40,6 +45,16 @@ import com.prodian.StudentManagementSystem.Service.StudentService;
 		}
 		
 		@PostMapping("/students")
+
+//		@PostMapping( value = "/students",consumes = {
+//				"application/json",
+//				"application/xml"
+//		},
+//				produces =  {
+//						"application/json",
+//						"application/xml"
+//				}
+//		)
 		public String saveStudent(@ModelAttribute("student") Student student) {
 			studentService.saveStudent(student);
 			return "redirect:/students";
